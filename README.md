@@ -1,4 +1,33 @@
-uwpy-winter2013
+UW Python Winter 2013 Project
 ===============
+Goals for the project:
+* Use Django and MySQL to build a simple site the accepts data in a form and displays it
+* Utilize Google API User Auth
+* Deploy the project to AppEngine while using Google's Cloud MySQL 
+* Build on the use the UserProfiles to better understand relational tables in Django. I really just wanted to simply
+  create a form wher a user could edit their profile in a form and save it. Not a trivial task which I could not get to work.
 
-Repository for UW Python Winter Class.
+Challenges:
+* I ended up using a boilerplate Django 1.4 project that included some examples for setting up the Cloud MySQL
+  Setting this up took some time getting OAuth to work, but worked flawlessly once I had everything in place.
+* Once I got my project all set up GAE and created my MySQL cloud instance, things work quite well.
+  Useful Instructions: http://howto.pui.ch/post/39245389801/tutorial-django-on-appengine-using-google-cloud-sql
+
+  Syncing Django DB to Cloud MySQL Instance: SETTINGS_MODE='prod' python manage.py syncdb
+  Syncing Project to AppEngine: appcfg.py --oauth2 update mysite
+
+* Setting up the OneToOne and ManyToMany relationships between a user and a Program and Activity table. At this point I still
+  do not have it working unfortunely.
+* I spent many many hours on trying to find the best way to extend the User class for UserProfiles. For whatever reason, if I
+  define the 'user' in a new UserProfile class model with a OneToOne instead of a ForeignKey, I cannot get the user manager to
+  work properly. ie. userprofile_set.all(). I was also not able to get .get_profile() as was suggested in many posts I found.
+  So I left it with using a ForeignKey and this seemed to get things working.
+* I'm having terrible problems getting the forms.ModelForm module to work.
+
+What does work.
+* I got bootstrap working to make things look pretty
+* I implemented the gaeauth module to get Google User Auth working while adding a new django User the first time they log in.
+* The Django Admin is fully functional which took some time with mapping my MySQL tables. I had considered using the non-rel
+  for deploying to GAE, but this would have prevent me from using the Admin module.
+* The Profile page will show you only the name of the User, but I still need to figure out why I cannot bring UserProfile show
+  userprofile attrs. I'm close but not quite there.
