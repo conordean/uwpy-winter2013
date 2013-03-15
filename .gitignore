@@ -1,3 +1,6 @@
+*.md
+*.swp
+bak
 *.pyc
 *.bak*
 .DS_Store
