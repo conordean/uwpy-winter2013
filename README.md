@@ -31,3 +31,60 @@ What does work.
   for deploying to GAE, but this would have prevent me from using the Admin module.
 * The Profile page will show you only the name of the User, but I still need to figure out why I cannot bring UserProfile show
   userprofile attrs. I'm close but not quite there.
+
+
+How to get this working locally:
+http://pythoncentral.org/setting-up-the-python-environment-with-virtualenv/
+easy_install pip
+pip install virtualenv
+pip install django
+
+Install MySQL on OSX:
+Grab a image file from www.mysql.com using the 64-bit dmg file and install.
+http://www.mysql.com/downloads/mysql/
+
+Once the two installs have been run you will need to manually start the server from a console or reboot your mac. 
+http://dev.mysql.com/doc/refman/5.1/en/macosx-installation-pkg.html
+
+Run the following commands
+export DYLD_LIBRARY_PATH=/usr/local/mysql/lib/
+PATH=$PATH:/usr/local/mysql/bin
+
+Next step was to install the python mysqldb module within a virtualenv python instance using 
+
+pip install MySQL-python
+
+You can test that mysql is working from a console 
+
+Mysql –u root –p
+
+The password should be a blank password so just hit enter when prompted for a password
+
+Type this to see the databases available:
+Show databases;
+(semicolon needed at the end of each command)
+
+
+Download Install Google Appengine Python SDK 1.7.5+
+Run the following:
+
+export GAE="/usr/local/google_appengine"
+export PYTHONPATH="$PYTHONPATH:$GAE:$GAE/lib/django_1_4"
+export PATH=${PATH}:$GAE/lib/django_1_4/django/bin/
+export PATH=${PATH}:/usr/local/mysql/bin
+
+Run locally:
+
+    git clone git@github.com:conordean/uwpy-winter2013.git
+    cd uwpy-winter2013
+    ./serve.sh
+
+Visit <http://localhost:8080>
+
+
+
+
+
+
+
+
