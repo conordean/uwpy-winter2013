@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Blog Entries</h1>
+{% if entries|length > 0 %}
+<ul id="entries">
+  {% for entry in entries %}
+  <li>
+    <div class="entry">
+      <h2>{{ entry.title }}</h2>
+      <div class="entry-body">
+      {{ entry.text|safe }}
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No entries created yet.  Get to work!</p>
+{% endif %}
+{% endblock %}

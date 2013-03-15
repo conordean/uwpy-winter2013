@@ -1,0 +1,21 @@
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Base Page</title>
+    <link type="text/css" rel="stylesheet" href="/media/main.css" />
+  </head>
+
+<table width="100%" border="0" cellspacing="0" cellspacing="0">
+  <tr>
+    <td colspan="6" bgcolor="#FFFFFF" align="right">
+      <div class="optionsStatic" align="right" >
+        {% if user.is_staff %}<a href="/admin/">Admin interface</a> |{% endif %}
+        <span id="login">{{ user.username }}</span> | 
+             <a href="{% url gaeauth.views.logout %}">Sign out</a>&nbsp;</div>
+        </td>
+      </tr>
+</table>
+</body>
+</html>

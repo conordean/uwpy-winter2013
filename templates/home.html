@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add_program_button').click(function() {
+            url = "{%url uw.views.add %}";
+            callback = add_program_callback;
+            $.post(url,{
+                "program_name":$('#showSearchField').val(),
+                "csrfmiddlewaretoken":"{{csrf_token}}"
+            },callback);
+            $('#showSearchField').val("")
+        });
+
+        $(function()
+        {
+            var  testTextBox = $('#showSearchField');
+            var code = null;
+            testTextBox.keypress(function(e)
+            {
+                code= (e.keyCode ? e.keyCode : e.which);
+                if (code == 13){
+                    url = "{%url uw.views.add %}";
+                    callback = add_show_callback;
+                    $.post(url,{
+                        "program_name":$('#showSearchField').val(),
+                        "csrfmiddlewaretoken":"{{csrf_token}}"
+                    },callback);
+                    $('#showSearchField').val("")
+                }
+            });
+
+        });
+    });
+
+    function add_program_callback(response){
+        $('#programs ul').append(response);
+    }
+
+    $(document).ajaxStart(function() {
+        $('#spinner').program();
+    }).ajaxStop(function() {
+        $('#spinner').hide();
+    });
+
+</script>
+
+    <div class="hero-unit">
+        <div class="row">
+            <div class="span6" id="programs">
+                <h2>Your Programs</h2>
+                <ul>
+                    {% for program in userprofile.programs.all %}
+                    <li> <a href="/program/{{ prog.id }}">{{ prog.name }}</a> </li>
+                    {% endfor %}
+                </ul>
+                {% include "program_lookup.html" %}
+                <a id="add_program_button" class="btn primary small" >+ Add</a>
+            </div>
+            <div class="span6" id="activities">
+                <h2>Your Activities</h2>
+                <ul>
+
+                </ul>
+                {% include "activity_lookup.html" %}
+                <a id="add_activity_button" class="btn primary small" >+ Add</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

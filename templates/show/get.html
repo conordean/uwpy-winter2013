@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#add_show_button').click(function() {
+            url = "{%url show.views.add %}";
+            callback = add_show_callback;
+            $.post(url,{
+                "show_name":$('#showSearchField').val(),
+                "csrfmiddlewaretoken":"{{csrf_token}}"
+            },callback);
+            $('#showSearchField').val("")
+        });
+
+        $(function()
+        {
+            var  testTextBox = $('#showSearchField');
+            var code = null;
+            testTextBox.keypress(function(e)
+            {
+                code= (e.keyCode ? e.keyCode : e.which);
+                if (code == 13){
+                    url = "{%url show.views.add %}";
+                    callback = add_show_callback;
+                    $.post(url,{
+                        "show_name":$('#showSearchField').val(),
+                        "csrfmiddlewaretoken":"{{csrf_token}}"
+                    },callback);
+                    $('#showSearchField').val("")
+                }
+            });
+
+        });
+    });
+
+    function add_show_callback(response){
+        $('#shows ul').append("<li>"+response+"</li>");
+    }
+
+    $(document).ajaxStart(function() {
+        $('#spinner').show();
+    }).ajaxStop(function() {
+        $('#spinner').hide();
+    });
+
+</script>
+
+    <div class="hero-unit">
+        <h2>{{ show.name }}</h2>
+        <a id="add_show_button" class="btn primary small" >+ Add</a>
+        <div id="show">
+
+        </div>
+    </div>
+{% endblock %}

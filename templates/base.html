@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}SlipStream{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/main.css" %}" />
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/autocomplete.css" %}">
+    {% block extra_css %}{% endblock extra_css %}
+
+    <script src="{% static "js/jquery-1.7.1.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-dropdown.js" %}"></script>
+    <script src="{% static "js/bootstrap-modal.js" %}"></script>
+    <script src="{% static "js/autocomplete.js" %}">></script>
+</head>
+
+<body>
+{% block header %}
+    <div class="topbar">
+        <div class="fill">
+            <div class="container">
+                <ul class="nav" id="topNav">
+                    <li><a href="/">Home</a></li>
+                </ul>
+                <ul class="nav secondary-nav">
+                    {% if not user.is_authenticated %}
+                        <li><a href="{% url gaeauth.views.login %}">Login</a></li>
+                    {% else %}
+                    <li class="dropdown" data-dropdown="dropdown">
+                        <a href="#" class="dropdown-toggle">{{user.username}}</a>
+                        <ul class="dropdown-menu">
+                                <li><a href="{% url userprofile.views.me %}">View Profile</a></li>
+                                <li><a href="{% url gaeauth.views.logout %}">Logout</a></li>
+                                {% if user.is_staff %}
+                                    <li class="divider"></li>
+                                    <li><a href="/admin/">Admin</a></li>
+                                {%endif %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<div class="container">
+    <div id="content" class="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        {% block footer %}
+            Presented by Conor Heathcote in UW Python 2013<br/>
+            <!-- STATS: Total: %(totTime).2f Python: %(pyTime).2f DB: %(dbTime).2f Queries: %(queries)d -->
+        {% endblock %}
+    </div>
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="content">
+
+      <h2>UW Python 2013</h2>
+        <ul>
+        {% load markup %}
+        {% load shiftTimeZone %}
+        {% for activity in activities %}
+          <li>
+            <div class="contentAuthor">
+            {% if activity.author %}
+                {% if activity.author.username == 'conordean' %}
+                    <b>C Dean!!!</b>
+                {% else %}
+                    {% if activity.author.username == 'cris' %}
+                        <b>C Heathcote!!!</b>
+                    {% else %}
+                        <b>{{ activity.author.username }}</b>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+              An anonymous person wrote
+            {% endif %}
+                {{ activity.date|applytimezone }}
+            </div>
+            <blockquote>{{ activity.content|markdown }}</blockquote>
+
+          </li>
+        {% endfor %}
+
+        </ul>
+        <a href="?p={{ nextpage }}">next</a>
+        <br/>
+        <br/>
+
+      <form action="/uw/create" method="post">{% csrf_token %}
+        <table>{{ form }}</table>
+        <input type="submit" value="Create New Activity" />
+      </form>
+  </div>
+
+  <div class="optionsStatic">
+
+{% endblock %}

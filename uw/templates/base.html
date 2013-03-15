@@ -1,0 +1,28 @@
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>{% block title %}uw{% endblock %}</title>
+    <link type="text/css" rel="stylesheet" href="/media/main.css" />
+  </head>
+  <body>
+  <table width="100%" border="0" cellspacing="0" cellspacing="0">
+    <tr>
+    <td colspan="6" bgcolor="#FFFFFF" align="right">
+    <div class="optionsStatic" align="right" >
+    {% if user.is_authenticated %}
+    {% if user.is_staff %}<a href="/admin/">Admin Console</a> |{% endif %}
+    <span id="login">{{ user.username }}</span> | 
+    <a href="{% url gaeauth.views.logout %}">Sign out</a>&nbsp;</div></class>
+    {% else %}
+    <a href="{% url gaeauth.views.login %}">Sign in</a>&nbsp;</div></class>
+    {% endif %}
+    </td>
+    </tr>
+  </table>
+    {% if user.is_authenticated %}
+    {% block content %}{% endblock %}
+    {% endif %}
+  </body>
+</html>
